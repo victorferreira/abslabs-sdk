@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# README
 
-## Getting Started
+## App
 
-First, run the development server:
+The app section contains the an application code to serve as an example. It has a button to generata a random transaction, a section do display the transactions aggregated by addresses, and a form to filter transaction by address and event. It uses the SDK to communicate with the API.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## SDK
+
+The SDK module bridges the gap between the app and the API. You can initialize the SDK using a an API_Key. To request an API Key send a POST request to `/api/keys`.
+
+```curl --header 'userId: 4e8f6671-6297-4625-a4e6-1daf581e4ba6' --request POST http://localhost:3000/api/keys```
+
+```ts
+import * as sdk from "@/sdk";
+
+const abslabsClient = sdk.initialize({
+  apiKey: "process.env.NEXT_PUBLIC_API_KEY",
+  campaingId: "random-event-name",
+});
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Once the SDK is initialized, you can use the client to issue points to an address and fetch points issued from and address. You can also filter transactions by eventName.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## API
 
-## Learn More
+The API is built using a single PostgreSQL database for all transaction data. This approach ensures efficiency in updating and querying the database without needing JOINS. This structure could be replicated using a key-value store, like Redis or DynamoDB, on possible future migration. 
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Using Postgres allows the API to track the balance over time with a single INSERT statement.  Implementing this on a traditional key-value store would require the service to fetch the latest transaction, calculate the new balance, and store all changes in the database while ensuring data consistency. Even if the service performs these tasks correctly, concurrent requests could produce an inconsistent balance, which can be difficult to track.

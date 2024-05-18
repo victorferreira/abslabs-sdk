@@ -1,7 +1,6 @@
 "use server";
 
 import client from "@/app/ablabs-client";
-import { PointIssued } from "@/sdk";
 import { revalidatePath } from "next/cache";
 
 const addresses: string[] = [
@@ -24,7 +23,7 @@ export async function getIssuedPoints() {
       return { points: [], address };
     }
 
-    const points = result?.data ? result.data : [];
+    const points = result.data ? result.data : [];
 
     return { points, address };
   });

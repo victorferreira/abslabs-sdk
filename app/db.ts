@@ -21,7 +21,7 @@ export async function insertTransaction(
   transaction: Transaction,
   userId: string
 ) {
-  return await sql`
+  const result = await sql`
       INSERT INTO transactions (address, points, previous_balance, event_name, client_id)
       VALUES (${transaction.address}, 
           ${transaction.points},
@@ -31,14 +31,16 @@ export async function insertTransaction(
             LIMIT 1),
           ${transaction.eventName},
           ${userId})`;
+  return result.rows;
 }
 
 export async function getTransactions(userId: string, address: string) {
-  return await sql`
+  const result = await sql`
           SELECT id, address, points, created_at, event_name, client_id
           FROM transactions
           WHERE client_id = ${userId}
           AND address = ${address}`;
+  return result.rows;
 }
 
 export async function getTransactionsByEvent(
@@ -46,10 +48,11 @@ export async function getTransactionsByEvent(
   address: string,
   eventName: string
 ) {
-  return await sql`
+  const result = await sql`
     SELECT id, address, points, created_at, event_name, client_id
     FROM transactions
     WHERE client_id = ${userId}
     AND event_name = ${eventName}
     AND address = ${address}`;
+  return result.rows;
 }

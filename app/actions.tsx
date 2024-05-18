@@ -24,7 +24,9 @@ export async function getIssuedPoints() {
       return { points: [], address };
     }
 
-    return { points: [...(result.data as PointIssued[])], address };
+    const points = result?.data ? result.data : [];
+
+    return { points, address };
   });
 
   return Promise.all(issuedPoints);

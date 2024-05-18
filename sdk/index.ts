@@ -14,7 +14,7 @@ export type PointsCollection =
       data: undefined;
     };
 
-const host = "http://localhost:3000/api";
+const host = process.env.NEXT_DOMAIN || "http://localhost:3000/api";
 
 const projectCredentials = { apiKey: "", campaingId: "" };
 

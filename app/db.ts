@@ -1,11 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
-import postgres from "postgres";
-
-let sql = postgres(process.env.DATABASE_URL || process.env.POSTGRES_URL!, {
-  //   ssl: "allow",
-});
+import { sql } from "@vercel/postgres";
 
 interface Transaction {
   address: string;

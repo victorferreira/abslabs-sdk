@@ -1,0 +1,81 @@
+# SDK Library README
+
+## Overview
+This SDK library provides easy-to-use functions to interact with our service, including distributing rewards and retrieving points. 
+
+## Installation
+You can install the SDK library via NPM:
+
+```bash
+npm install your-sdk-library-name
+```
+
+## Registering an API_KEY
+
+```shell
+curl --header 'userId: 4e8f6671-6297-4625-a4e6-1daf581e4ba6' --request POST http://https://abslabs-sdk.vercel.app/api/keys
+```
+
+## Initialization
+To use the SDK, you need to initialize it with your API key. You can obtain an API key by signing up on our platform.
+
+```typescript
+import * as sdk from "@/sdk";
+
+const sdk = sdk.initialize({
+  apiKey: 'YOUR_API_KEY'
+});
+```
+
+## Public Functions
+
+### 1. `distribute`
+Distributes points to users.
+
+**Parameters:**
+- `eventName`: The event name allows the client to group issed points for the same event
+- `poinstData`: An object containing the `address` and the amount of `points` to be issued.
+
+**Example:**
+```typescript
+const result = await sdk.distribute(
+    eventName: "mkt_campaing",
+    pointsData: { 
+        address: '0xfedcba9876543210fedcba9876543210fedcba98', 
+        points: 50 
+    }
+);
+
+console.log(result);
+```
+
+### 2. `getPoints`
+Retrieves the issued points for a given address.
+
+**Example:**
+```javascript
+const address = "0xfedcba9876543210fedcba9876543210fedcba98"
+const result = await sdk.getPoints(address);
+
+console.log(result);
+```
+
+### 3. `getPointsByAddressAndEvent`
+Retrieves points for a specific user address and event.
+
+**Parameters:**
+- `address` (String): The user’s address.
+- `event` (String): The event identifier.
+
+**Example:**
+```typescript
+const address = "0xfedcba9876543210fedcba9876543210fedcba98";
+const event = "mkt_campaing";
+
+const result = sdk.getPointsByAddressAndEvent(address, event);
+
+console.log(result);
+```
+
+## License
+This SDK is licensed under the [MIT License](LICENSE).

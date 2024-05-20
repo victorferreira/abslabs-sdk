@@ -1,6 +1,6 @@
-import * as sdk from "@/sdk";
+import { initialize } from "@/sdk";
 
-const abslabsClient = sdk.initialize({
+const abslabsClient = initialize({
   apiKey: "process.env.NEXT_PUBLIC_API_KEY",
   campaingId: "random-event-name",
 });

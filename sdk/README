@@ -20,10 +20,11 @@ curl --header 'userId: 4e8f6671-6297-4625-a4e6-1daf581e4ba6' --request POST http
 To use the SDK, you need to initialize it with your API key. You can obtain an API key by signing up on our platform.
 
 ```typescript
-import * as sdk from "@/sdk";
+import { initalize } from "abslabs-sdk-test";
 
-const sdk = sdk.initialize({
-  apiKey: 'YOUR_API_KEY'
+const sdk = initialize({
+  apiKey: 'YOUR_API_KEY',
+  campaingId: "MARKETING_CAMPAING_ID",
 });
 ```
 

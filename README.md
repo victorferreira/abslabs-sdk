@@ -11,9 +11,9 @@ The SDK module bridges the gap between the app and the API. You can initialize t
 ```curl --header 'userId: 4e8f6671-6297-4625-a4e6-1daf581e4ba6' --request POST http://localhost:3000/api/keys```
 
 ```ts
-import * as sdk from "@/sdk";
+import { initalize } from "abslabs-sdk-test";
 
-const abslabsClient = sdk.initialize({
+const abslabsClient = initialize({
   apiKey: "process.env.NEXT_PUBLIC_API_KEY",
   campaingId: "random-event-name",
 });
